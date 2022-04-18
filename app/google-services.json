@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642242277767",
+    "project_id": "nonar-international-travel",
+    "storage_bucket": "nonar-international-travel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642242277767:android:2c7565f15b5cfb5a876322",
+        "android_client_info": {
+          "package_name": "com.example.nonarinternationaltravel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642242277767-jbtlj88rg59ji5npqn8jfjm7lp89uhu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC82E7Wtbbd57wf4w0qqAXh66WstDoTCuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642242277767-jbtlj88rg59ji5npqn8jfjm7lp89uhu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
