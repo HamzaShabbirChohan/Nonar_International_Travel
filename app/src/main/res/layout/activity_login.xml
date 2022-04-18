@@ -100,10 +100,11 @@
         <com.github.ybq.android.spinkit.SpinKitView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/spin_kit"
-            style="@style/SpinKitView.Large.Circle"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            style="@style/SpinKitView.DoubleBounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center"
             app:SpinKit_Color="@color/gold_color" />
         <androidx.cardview.widget.CardView

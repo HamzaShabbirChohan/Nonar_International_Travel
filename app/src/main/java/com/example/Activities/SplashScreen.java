@@ -11,6 +11,8 @@ import com.example.nonarinternationaltravel.R;
 import com.example.nonarinternationaltravel.Selection;
 import com.google.firebase.auth.FirebaseAuth;
 
+import io.paperdb.Paper;
+
 public class SplashScreen extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
@@ -19,24 +21,30 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        Paper.init(SplashScreen.this);
+        final String temp = Paper.book().read("active");
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(firebaseAuth.getCurrentUser()!=null)
-                {
-                    startActivity(new Intent(SplashScreen.this, FlightsMainActivity.class));
-                }else {
+                if (temp != null) {
+                    if (temp.equals("user")) {
+                        startActivity(new Intent(SplashScreen.this, SingelAgentsFlights.class));
+                        finish();
+                    }
+                    if (temp.equals("admin")) {
+                        startActivity(new Intent(SplashScreen.this, FlightsMainActivity.class));
+                        finish();
+                    }
+                } else {
                     startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-
+                    finish();
                 }
-                finish();
+
             }
         }, 2000); //time in milliseconds
-
-
-
 
 
     }

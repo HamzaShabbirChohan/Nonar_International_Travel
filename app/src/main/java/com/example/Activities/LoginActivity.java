@@ -28,9 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import io.paperdb.Paper;
+
 public class LoginActivity extends AppCompatActivity {
 
-   EditText email,password;
+    EditText email, password;
     LinearLayout login;
     ImageView profile;
     FirebaseAuth firebaseAuth;
@@ -43,52 +45,49 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        email=findViewById(R.id.datadate);
-        password=findViewById(R.id.password);
-        login=findViewById(R.id.upload_btn);
-        spinKitView=findViewById(R.id.spin_kit);
-        firebaseAuth=FirebaseAuth.getInstance();
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=FirebaseDatabase.getInstance().getReference();
-      //  Validation();
-
-
+        Paper.init(LoginActivity.this);
+        email = findViewById(R.id.datadate);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.upload_btn);
+        spinKitView = findViewById(R.id.spin_kit);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        //  Validation();
 
 
-        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
-        Sprite doubleBounce = new DoubleBounce();
-        progressBar.setIndeterminateDrawable(doubleBounce);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.spin_kit);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  spinKitView;
+                //  spinKitView;
 
-                if(Validation())
-                {
+                if (Validation()) {
 
                     progressBar.setVisibility(View.VISIBLE);
                     login.setVisibility(View.GONE);
-                    String emaill= email.getText().toString().trim();
-                  String pass=  password.getText().toString().trim();
-                    firebaseAuth.signInWithEmailAndPassword(emaill,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    String emaill = email.getText().toString().trim();
+                    String pass = password.getText().toString().trim();
+                    firebaseAuth.signInWithEmailAndPassword(emaill, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             progressBar.setVisibility(View.GONE);
                             login.setVisibility(View.VISIBLE);
 
-                            if(emaill.toLowerCase().equals("azeem12@gmail.com")) {
+                            if (emaill.toLowerCase().equals("azeem12@gmail.com")) {
+                                Paper.book().write("active","admin");
                                 Intent intent = new Intent(LoginActivity.this, FlightsMainActivity.class);
                                 startActivity(intent);
-                            }else{
+                            } else {
                                 databaseReference.child("Agent2").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Paper.book().write("active", "user");
                                         AgentModel agentModel = new AgentModel();
                                         agentModel = snapshot.getValue(AgentModel.class);
                                         Intent intent = new Intent(LoginActivity.this, SingelAgentsFlights.class);
-                                        intent.putExtra("singleagent",agentModel);
+                                        intent.putExtra("singleagent", agentModel);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -117,19 +116,15 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-   public boolean Validation()
-    {
+    public boolean Validation() {
 
-        if(email.getText().toString().isEmpty())
-        {
+        if (email.getText().toString().isEmpty()) {
             email.setError("please enter your email");
             return false;
         }
-        if(password.getText().toString().isEmpty())
-        {
+        if (password.getText().toString().isEmpty()) {
             password.setError("please enter your password");
             return false;
         }
